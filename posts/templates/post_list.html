@@ -6,12 +6,17 @@
 </head>
 <body>
     <h1>The Post {{title}} Page</h1>
+    <ol>
     {% for object in object_list %}
-        {{object.title}} <br>
-        {{object.content}} <br>
-        {{object.timestamp}} <br>
-        {{object.updated}} <br>
-        {{object.id}} <br>
+        <a href="{{object.get_abs_url}}"><li>{{object.title}}</li></a> <br>
+        <ul>
+            <li>{{object.content}} <br></li>
+            <li>{{object.timestamp}} <br></li>
+            <li>{{object.updated}} <br></li>
+            <li>{{object.id}} <br></li>
+            <br>
+        </ul>
     {% endfor %}
+    </ol>
 </body>
 </html>
