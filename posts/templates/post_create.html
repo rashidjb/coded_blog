@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Post Create</title>
+    <title>Post {{title}}</title>
 </head>
 <body>
     <h1>The Post {{title}} Page</h1>
+    <form method = "POST" action ='{% url "posts:create" %}'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <br>
+    <input type="submit" name="Create Post">
+    </form>
     <p>{{user}}</p>
+
 </body>
 </html>

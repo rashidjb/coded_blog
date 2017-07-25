@@ -6,6 +6,13 @@
 </head>
 <body>
     <h1>The Post {{title}} Page</h1>
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class = {{" message.tags "}} {% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
     <ol>
     {% for object in object_list %}
         <a href="{{object.get_abs_url}}"><li>{{object.title}}</li></a> <br>
@@ -14,9 +21,15 @@
             <li>{{object.timestamp}} <br></li>
             <li>{{object.updated}} <br></li>
             <li>{{object.id}} <br></li>
-            <br>
         </ul>
+        <ul>
+        <li><a href={% url 'posts:update' post_id=object.id %} >Edit</a></li>
+        <li><a href={% url 'posts:delete' post_id=object.id %} >Delete</a></li>
+        </ul>
+        <br>
     {% endfor %}
     </ol>
+
+    <a href={% url 'posts:create' %} >Create Post</a>
 </body>
 </html>

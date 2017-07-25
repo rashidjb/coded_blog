@@ -1,14 +1,22 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
+from .forms import PostForm
+from django.contrib import messages
 
 def post_home(request):
-	return HttpResponse("<h1> Hello</h1>")
+	return HttpResponse("<h1>Hello</h1>")
 
 def post_create(request):
+	form = PostForm(request.POST or None) 
+	if form.is_valid():
+		form.save()
+		messages.success(request, "You did it!... eventually.")
+		return redirect("posts:list")
 	context = {
-	'title':'List',
-	'user': request.user
+	'title':'Create',
+	'user': request.user,
+	'form': form,
 	}
 	return render(request, 'post_create.html', context)
 
@@ -29,16 +37,21 @@ def post_list(request):
     }
     return render(request, 'post_list.html', context)
 
-def post_update(request):
+def post_update(request, post_id):
+	post_object = get_object_or_404(Post, id=post_id)
+	form = PostForm(request.POST or None, instance = post_object) 
+	if form.is_valid():
+		form.save()
+		return redirect("posts:list")
 	context = {
-	'title':'List',
-	'user': request.user
+	'title':'Update',
+	'user': request.user,
+	'form': form,
+	'post_object': post_object,
 	}
 	return render(request, 'post_update.html', context)
 
-def post_delete(request):
-	context = {
-	'title':'List',
-	'user': request.user
-	}
-	return render(request, 'post_delete.html', context)
+def post_delete(request, post_id):
+	Post.objects.get(id=post_id).delete()
+	messages.warning(request, "Goodbye Post")
+	return redirect("posts:list")

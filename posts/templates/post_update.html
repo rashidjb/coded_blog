@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Post Update</title>
+    <title>Post {{title}}</title>
 </head>
 <body>
-    <h1>The Post Update Page</h1>
+    <h1>The Post {{title}} Page</h1>
     <p>{{user}}</p>
+    <form method="POST" action="{% url 'posts:update' post_id=post_object.id %}">
+    	{% csrf_token %}
+    	{{form.as_p}}
+    	<input type="submit" name="Update Post">
+
+    </form>
 </body>
 </html>
