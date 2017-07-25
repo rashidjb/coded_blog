@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Post Detail</title>
-</head>
-<body>
+{% extends "base.html" %}
+ 
+{% block content %}
     <h1>The Post {{title}} Page</h1>
 
     {{instance.title}} <br>
@@ -14,5 +10,4 @@
     {{instance.id}} <br>
 
     <a href="{%url 'posts:list' %}">return to list</a>
-</body>
-</html>
+{% endblock content %}

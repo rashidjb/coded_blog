@@ -1,28 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Post List</title>
-</head>
-<body>
+{% extends "base.html" %}
+ 
+{% block content %}
     <h1>The Post {{title}} Page</h1>
-    {% if messages %}
-        <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class = {{" message.tags "}} {% endif %}>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
     <ol>
     {% for object in object_list %}
         <a href="{{object.get_abs_url}}"><li>{{object.title}}</li></a> <br>
-        <ul>
+        <ul class = "post_details">
             <li>{{object.content}} <br></li>
             <li>{{object.timestamp}} <br></li>
             <li>{{object.updated}} <br></li>
             <li>{{object.id}} <br></li>
         </ul>
-        <ul>
+        <ul class = "post_modify">
         <li><a href={% url 'posts:update' post_id=object.id %} >Edit</a></li>
         <li><a href={% url 'posts:delete' post_id=object.id %} >Delete</a></li>
         </ul>
@@ -31,5 +20,4 @@
     </ol>
 
     <a href={% url 'posts:create' %} >Create Post</a>
-</body>
-</html>
+{% endblock content%}

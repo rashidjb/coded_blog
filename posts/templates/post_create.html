@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Post {{title}}</title>
-</head>
-<body>
+{% extends "base.html" %}
+ 
+{% block content %}
+
     <h1>The Post {{title}} Page</h1>
     <form method = "POST" action ='{% url "posts:create" %}'>
     {% csrf_token %}
@@ -14,5 +11,4 @@
     </form>
     <p>{{user}}</p>
 
-</body>
-</html>
+{% endblock content %}
