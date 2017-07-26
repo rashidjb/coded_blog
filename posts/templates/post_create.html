@@ -3,7 +3,7 @@
 {% block content %}
 
     <h1>The Post {{title}} Page</h1>
-    <form method = "POST" action ='{% url "posts:create" %}'>
+    <form method = "POST" action ='{% url "posts:create" %}' enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
     <br>

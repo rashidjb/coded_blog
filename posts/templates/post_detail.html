@@ -9,5 +9,9 @@
     {{instance.updated}} <br>
     {{instance.id}} <br>
 
+	{% if instance.image %}
+    <img src="{{instance.image.url}}"  alt="hahaha"> <br>
+    {% endif %}
+
     <a href="{%url 'posts:list' %}">return to list</a>
 {% endblock content %}

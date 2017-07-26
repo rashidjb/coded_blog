@@ -3,9 +3,12 @@
 {% block content %}
 	<h1 class="page-header">The Post {{title}} Page</h1>
 	<div class="row">
-		{% for object in object_list %}
+		{% for object in objects %}
 		  <div class="col-sm-6">
 			<div class="thumbnail">
+				{%if object.image %}
+					<img src="{{object.image.url}}" alt="hahaha">
+				{% endif %}
 				<div class="caption">
 				  <h2><a href="{{object.get_abs_url}}">{{object.title}} <small>{{object.content|truncatechars:15}}</small></a></h2>
 				  <p></p>
@@ -19,6 +22,22 @@
 			</div>
 		  </div>
 		{% endfor %}
+	</div>
+
+	<div class="pagination">
+		<span class="step-links">
+			{% if objects.has_previous %}
+				<a href="?page={{ objects.previous_page_number }}">previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ objects.number }} of {{ objects.paginator.num_pages }}.
+			</span>
+
+			{% if objects.has_next %}
+				<a href="?page={{ objects.next_page_number }}">next</a>
+			{% endif %}
+		</span>
 	</div>
 
 	<a href={% url 'posts:create' %} class="btn btn-primary col-sm-12">Create Post</a>
