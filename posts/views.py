@@ -29,7 +29,7 @@ def post_detail(request, post_id):
     return render(request, 'post_detail.html', context)
 	
 def post_list(request):
-    object_list = Post.objects.all()
+    object_list = Post.objects.all()#.order_by("-updated", "-title")
     context = {
     "object_list": object_list,
     "title": "List",

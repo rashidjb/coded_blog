@@ -13,3 +13,6 @@ class Post(models.Model):
 
 	def get_abs_url(self):
 		return reverse("posts:detail", kwargs={"post_id": self.id})
+
+	class Meta:
+		ordering = ["-content", "-updated", "-title"]

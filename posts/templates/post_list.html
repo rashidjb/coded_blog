@@ -1,23 +1,25 @@
 {% extends "base.html" %}
  
 {% block content %}
-    <h1>The Post {{title}} Page</h1>
-    <ol>
-    {% for object in object_list %}
-        <a href="{{object.get_abs_url}}"><li>{{object.title}}</li></a> <br>
-        <ul class = "post_details">
-            <li>{{object.content}} <br></li>
-            <li>{{object.timestamp}} <br></li>
-            <li>{{object.updated}} <br></li>
-            <li>{{object.id}} <br></li>
-        </ul>
-        <ul class = "post_modify">
-        <li><a href={% url 'posts:update' post_id=object.id %} >Edit</a></li>
-        <li><a href={% url 'posts:delete' post_id=object.id %} >Delete</a></li>
-        </ul>
-        <br>
-    {% endfor %}
-    </ol>
+	<h1 class="page-header">The Post {{title}} Page</h1>
+	<div class="row">
+		{% for object in object_list %}
+		  <div class="col-sm-6">
+			<div class="thumbnail">
+				<div class="caption">
+				  <h2><a href="{{object.get_abs_url}}">{{object.title}} <small>{{object.content|truncatechars:15}}</small></a></h2>
+				  <p></p>
+				  <p>
+					  <a href="{{object.get_abs_url}}" class="btn btn-primary">Details</a>
+					  <a href={% url 'posts:update' post_id=object.id %} class="btn btn-warning">Edit</a>
+					  <a href={% url 'posts:delete' post_id=object.id %} class="btn btn-danger">Delete</a>
+				  </p>
+				  <p>Last updated: {{object.updated|timesince}} ago</p>
+				</div>
+			</div>
+		  </div>
+		{% endfor %}
+	</div>
 
-    <a href={% url 'posts:create' %} >Create Post</a>
+	<a href={% url 'posts:create' %} class="btn btn-primary col-sm-12">Create Post</a>
 {% endblock content%}
