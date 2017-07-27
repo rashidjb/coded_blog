@@ -1,14 +1,12 @@
 {% extends "base.html" %}
  
 {% block content %}
-
-    <h1>The Post {{title}} Page</h1>
-    <form method = "POST" action ='{% url "posts:create" %}' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <br>
-    <input type="submit" name="Create Post">
-    </form>
-    <p>{{user}}</p>
-
+	<h1>The Post {{title}} Page</h1>
+	<form method = "POST" action ='{% url "posts:create" %}' enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form.as_p}}
+		<br>
+		<input type="submit" name="Create Post">
+	</form>
+	<p>{{user}}</p>
 {% endblock content %}
