@@ -4,6 +4,7 @@ from .models import Post
 from .forms import PostForm
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from urllib.parse import quote
 
 def post_home(request):
 	return HttpResponse("<h1>Hello</h1>")
@@ -25,7 +26,8 @@ def post_detail(request, post_id):
 	instance = get_object_or_404(Post, id=post_id)
 	context = {
 	"title": "Detail",
-	"instance": instance
+	"instance": instance,
+	"share_string": quote(instance.content)
 	}
 	return render(request, 'post_detail.html', context)
 	
