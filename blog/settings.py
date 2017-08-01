@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'crispy_forms',
+    'django.contrib.sites',
+    'django_comments',
 ]
+
+SITE_ID = 1
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
