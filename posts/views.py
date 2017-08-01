@@ -32,6 +32,7 @@ def usersignup(request):
 	return render(request, "signup.html", context)
 
 def userlogin(request):
+	referer = request.META.get('HTTP_REFERER')
 	context = {}
 	form = UserLogin()
 	context["form"] = form
@@ -44,9 +45,9 @@ def userlogin(request):
 			auth_user = authenticate(username = username, password = password)
 			if auth_user is not None:
 				login(request, auth_user)
-				return redirect("posts:list")
+				return redirect(referer)
 			messages.warning(request, "Wrong login details, please try again")
-			return redirect("posts:list")
+			return redirect("posts:login")
 		messages.warning(request, form.errors)
 		return redirect("posts:login")
 	return render(request, "login.html", context)
