@@ -2,17 +2,18 @@
  
 {% block content %}
 	<h1 class="page-header"><a href={% url 'posts:list'%}>The Post {{title}} Page</a></h1>
-	<div class="row">
 
+	<div class="row">
+		<!--
 		<form action="{% url 'posts:list' %}" method="GET">
 			<input type="text" name = "q" placeholder="Search posts here" value="{{request.GET.q}}">
 			<input type="button" class="btn btn-default" value="Search">
 			<a href="?page={{ objects.number }}&q=" class="btn btn-primary">Back to list</a>
 		</form>
-		
+		-->
 		<br>
 		{% for object in objects %}
-		  <div class="col-sm-6 row-sm-height">
+		  <div class="col-sm-6">
 			<div class="thumbnail">
 				{%if object.image %}
 					<img src="{{object.image.url}}" alt="hahaha">
