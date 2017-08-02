@@ -1,0 +1,29 @@
+
+<button class="btn" onclick="ajax_like()">
+	<span id="likes_count">{{like_count}}</span>
+	<span id="heart" class="glyphicon {% if liked %} text-danger {% endif %}glyphicon-heart" aria-hidden="true"></span>
+</button>
+
+<script>
+	function ajax_like(){
+		console.log("Like/Unlike clicked!");
+
+		$.ajax({
+			type: 'GET',
+			url: '{% url "posts:like_button" post_id=instance.id %}',
+			error: function(){
+				console.log("error")
+			},
+			success: function(data){
+				$("#likes_count").text(data.like_count);
+				console.log("success")
+
+				if(data.action==="like"){
+					$("#heart").addClass("text-danger");
+				}else{
+					$("#heart").removeClass("text-danger");
+				}
+			} ,
+		});
+	}
+</script>

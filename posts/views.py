@@ -1,11 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import *
 from .forms import PostForm, UserSignUp, UserLogin
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from urllib.parse import quote
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils import timezone
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
@@ -79,12 +79,24 @@ def post_create(request):
 
 def post_detail(request, slug):
 	instance = get_object_or_404(Post, slug=slug)
+
 	if instance.publish > timezone.now().date() or instance.draft:
 		if not (request.user.is_staff or request.user.is_superuser):
 			raise Http404
+
+	if request.user.is_authenticated():
+		if Like.objects.filter(post = instance, user = request.user).exists():
+			liked = True
+		else:
+			liked = False
+
+	posts_like_count = instance.like_set.all().count()
+
 	context = {
 	"title": "Detail",
 	"instance": instance,
+	"liked": liked,
+	"like_count": posts_like_count,
 	}
 	return render(request, 'post_detail.html', context)
 	
@@ -126,8 +138,10 @@ def post_list(request):
 def post_update(request, slug):
 	if not (request.user.is_staff or request.user.is_superuser):
 		raise Http404
+
 	post_object = get_object_or_404(Post, slug=slug)
 	form = PostForm(request.POST or None, request.FILES or None, instance = post_object) 
+
 	if form.is_valid():
 		form.save()
 		return redirect("posts:list")
@@ -145,3 +159,22 @@ def post_delete(request, slug):
 	Post.objects.get(slug=slug).delete()
 	messages.warning(request, "Goodbye Post")
 	return redirect("posts:list")
+
+def like_button(request, post_id):
+	obj = Post.objects.get(id=post_id)
+	like, created = Like.objects.get_or_create(user = request.user, post = obj)
+
+	if created:
+		action="like"
+	else:
+		action="unlike"
+		like.delete()
+
+	posts_like_count = obj.like_set.all().count()
+
+	context = {
+	"action":action,
+	"like_count":posts_like_count
+	}
+	return JsonResponse(context, safe = False)
+

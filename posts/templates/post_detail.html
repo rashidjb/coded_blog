@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load urlify %}
 
  
 {% block content %}
@@ -23,17 +22,14 @@
 						<a href={% url 'posts:delete' slug=instance.slug %} class="btn btn-danger">Delete</a>
 					</p>
 				{% endif %}
-
-				<p><a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}">Share on Facebook</a></p>
-				<p><a href="https://twitter.com/home?status=instance.content|urlify%20{{request.build_absolute_uri}}">Share on Twitter</a></p>
-				{# summary={{instance.content|urlify}} #}
-				<p><a href="https://www.linkedin.com/shareArticle?mini=true&url={{request.build_absolute_uri}}&title={{instance.title|urlify}}&summary={{instance.content|urlify}}&source={{request.build_absolute_uri}}">Share on Linkedin</a></p>
-
+				
+				{% include "share.html" %}
 
 				</div>
 			</div>
 		  </div>
 	</div>
+	{% include "likes.html" %}
 	{% include "comments.html" %}
 	<br>
 	<p>
