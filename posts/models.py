@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 # Create your models here.
+
 class Post(models.Model):
 	author = models.ForeignKey(User, default = 1)
 	title = models.CharField(max_length=255)

@@ -5,7 +5,7 @@
 	<h1>The Post {{title}} Page</h1>
 
 	<div class = "row">
-		<div class="col-sm-6">
+		<div class="col-sm-8 col-sm-offset-2">
 			<div class="thumbnail">
 				{%if instance.image %}
 					<img src="{{instance.image.url}}" alt="hahaha">
@@ -29,8 +29,11 @@
 			</div>
 		  </div>
 	</div>
-	{% include "likes.html" %}
-	{% include "comments.html" %}
+	<!--{% include "likes.html" %}
+	{% include "comments.html" %}-->
+	<div class="fb-like col-sm-8 col-sm-offset-2" data-href="{{request.build_absolute_uri}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+	<br>
+	<div class="fb-comments col-sm-8 col-sm-offset-2" data-href="{{request.build_absolute_uri}}" data-numposts="5"></div>
 	<br>
 	<p>
 		<a href="{%url 'posts:list' %}" class="btn btn-primary col-sm-12">Return to List</a>
