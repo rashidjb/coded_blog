@@ -25,7 +25,7 @@ SECRET_KEY = '6pcxo@_f+xc*@p97f@b*7b=#ktxwzf!je6ll9lk$dvxg54*g$k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['165.227.130.238']
+ALLOWED_HOSTS = ['165.227.130.238', 'rb-coded.tech']
 
 
 # Application definition
