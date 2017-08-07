@@ -21,8 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^/', admin.site.urls),
-    url(r'^posts/', include('posts.urls', namespace="posts")),
+    url(r'^', include('posts.urls', namespace="posts")),
     url(r'^comments/', include('django_comments.urls'))
 ]
 
