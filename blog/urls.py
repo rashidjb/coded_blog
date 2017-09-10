@@ -21,8 +21,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('posts.urls', namespace="posts")),
-    url(r'^comments/', include('django_comments.urls'))
+    url(r'^posts/', include('posts.urls', namespace="posts")),
+    url(r'^comments/', include('django_comments.urls')),
+    url(r'^api/', include('api.urls', namespace="api")),
+    url(r'^google/', include('google_app.urls', namespace="google")),
+    url(r'^githubapp/', include('githubapp.urls', namespace='githubapp')),
+    url(r'^twitter/', include('twitter_app.urls', namespace='twitter')),
+    url(r'^accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>{{owner}}'s branches for the {{repo}} project:</h3>
+
+<table class='table'>
+	{% for branch in response %}
+		<tr>
+			<td><p>Name: {{branch.name}}</p>
+				<p>sha: {{branch.commit.sha}}</p>
+				<p>url: {{branch.commit.url}}</p>
+
+			</td>
+
+		</tr>
+	{% endfor %}
+</table>
+{% endblock content %}

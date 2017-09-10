@@ -22,7 +22,7 @@
 				  <h2><a href="{{object.get_abs_url}}">{{object.title}} <small>{{object.publish|timesince}}</small></a></h2>
 				  {%if object.draft %}<h4>DRAFT</h4>{% endif %}
 				  {% if object.publish > today %}
-				  	<h4>FUTURE BLOG POST</h4>
+					<h4>FUTURE BLOG POST</h4>
 				  {% endif %}
 				  <p>
 					  <a href="{{object.get_abs_url}}" class="btn btn-primary">Details</a>

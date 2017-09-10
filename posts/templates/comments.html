@@ -13,7 +13,7 @@
 		<form action="{% comment_form_target %}" method="POST">
 			{% csrf_token %}
 			<input type="hidden" name="name" value="{{request.user.username}}">
-			<input type="hidden" name="email" value="{{request.user.email}}">
+			<input type="hidden" name="email" value="{{request.user.username}}@posts.com">
 			<p>Add your comment below:</p>
 			<textarea type="text" class="form-control input-lg" name="comment"></textarea>
 			{{form.content_type}}

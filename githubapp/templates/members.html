@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class='table'>
+	{% for member in response %}
+		<tr>
+
+			<td><img src="{{member.avatar_url}}" alt="avatar"></td>
+			<td>Login: {{member.login}}</td>
+			<td>ID: {{member.id}}</td>
+			<td>
+				<form action="{% url 'githubapp:member_details' %}" method="GET">
+					<input type="hidden" name="username" value="{{member.login}}">
+	        		<input type="submit" name="submit" value="More Info">
+				</form>
+			</td>
+			<td>
+				<form action="{% url 'githubapp:repos' %}" method="GET">
+					<input type="hidden" name="user" value="{{member.login}}">
+	        		<input type="submit" name="submit" value="Go to Repos">
+				</form>
+			</td>
+
+		</tr>
+	{% endfor %}
+</table>
+{% endblock content %}

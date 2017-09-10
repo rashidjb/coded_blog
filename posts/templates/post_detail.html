@@ -29,13 +29,12 @@
 			</div>
 		  </div>
 	</div>
-	<!--{% include "likes.html" %}
-	{% include "comments.html" %}-->
-	<div class="fb-like col-sm-8 col-sm-offset-2" data-href="{{request.build_absolute_uri}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+	{% include "likes.html" %}
+	{% include "comments.html" %}
+	<!--<div class="fb-like col-sm-8 col-sm-offset-2" data-href="{{request.build_absolute_uri}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 	<br>
 	<div class="fb-comments col-sm-8 col-sm-offset-2" data-href="{{request.build_absolute_uri}}" data-numposts="5"></div>
+	-->
 	<br>
-	<p>
-		<a href="{%url 'posts:list' %}" class="btn btn-primary col-sm-12">Return to List</a>
-	</p>
+		<button class="btn btn-primary col-sm-12"><a href="{%url 'posts:list' %}" >Return to List</a></button>
 {% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="{% url 'google:text' %}" method="GET">
+          <input type="text" class="form-control" placeholder="Search" name = "place" 
+          value="{{request.GET.place}}">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+
+	<h1>STATUS {{response.status}}</h1>
+	{% if response.results %}
+		<table class="table">
+			{% for result in response.results %}
+				<tr>
+					<td>
+						<a href="">{{result.name}}</a>
+					</td>
+					<td>
+						<form action="{% url 'google:detail' %}" method="GET">
+	        				<input type="hidden" name="reference" value="{{ result.reference }}">
+	        				<input type="submit" name="submit" value="More Info">
+	   					</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+	{% if response.next_page_token %}
+		<form action="{% url 'google:text' %}" method="GET">
+	        <input type="hidden" name="next_page_token" value="{{ response.next_page_token }}">
+	        <input type="submit" name="submit" value="Next Page">
+	    </form>
+    {%	endif %}
+{% endblock content %}

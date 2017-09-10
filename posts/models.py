@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
 
 class Post(models.Model):
@@ -11,7 +12,7 @@ class Post(models.Model):
 	image = models.ImageField(upload_to="blog_images", null=True, blank=True)
 	content = models.TextField()
 	draft = models.BooleanField(default = False)
-	publish = models.DateField()
+	publish = models.DateField(default=timezone.now)
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 	slug = models.SlugField(unique = True, null = True)

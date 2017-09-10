@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="{% url 'google:near' %}" method="GET">
+          <input type="text" class="form-control" placeholder="Radius" name = "radius" 
+          value="">
+          <input id="lat" type="hidden" name="latitude" value="">
+          <input id="long" type="hidden" name="longitude" value="">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+
+	<h1>STATUS {{response.status}}</h1>
+	{% if response.results %}
+		<table class="table">
+			{% for result in response.results %}
+				<tr>
+					<td>
+						{{result.name}}
+					</td>
+					<td>
+						<form action="{% url 'google:detail' %}" method="GET">
+	        				<input type="hidden" name="reference" value="{{ result.reference }}">
+	        				<input type="submit" name="submit" value="More Info">
+	   					</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+	{% if response.next_page_token %}
+		<form action="{% url 'google:near' %}" method="GET">
+	        <input type="hidden" name="next_page_token" value="{{ response.next_page_token }}">
+	        <input type="submit" name="submit" value="Next Page">
+	    </form>
+    {%	endif %}
+
+
+<script type="text/javascript">
+	var options = {
+	  enableHighAccuracy: true,
+	  timeout: 5000,
+	  maximumAge: 0
+	};
+
+	function success(pos) {
+	  var crd = pos.coords;
+
+	  var map = $('#map');
+	  var lat = $('#lat');
+	  var long = $('#long');
+
+	  lat.attr('value', crd.latitude)
+	  long.attr('value', crd.longitude)
+
+
+	  console.log('Your current position is:');
+	  console.log(`Latitude : ${crd.latitude}`);
+	  console.log(`Longitude: ${crd.longitude}`);
+	  console.log(`More or less ${crd.accuracy} meters.`);
+	};
+
+	function error(err) {
+	  console.warn(`ERROR(${err.code}): ${err.message}`);
+	  navigator.geolocation.getCurrentPosition(success, error, options);
+	};
+
+	window.onload = navigator.geolocation.getCurrentPosition(success, error, options);
+</script>	
+{% endblock content %}

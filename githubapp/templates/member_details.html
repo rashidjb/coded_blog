@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class='table'>
+			<tr>
+				<td><img src="{{response.avatar_url}}" alt="avatar"></td>
+				<td>
+					<p>Login: {{response.login}}</p>
+					<p>ID: {{response.id}}</p>
+					<p>Url: {{response.url}}</p>
+					<p>Repo Url: {{response.repo_url}}</p>
+				</td>
+			</tr>
+</table>
+{% endblock content %}

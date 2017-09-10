@@ -3,7 +3,7 @@ from posts import views
 
 urlpatterns = [
     url(r'^create/$', views.post_create, name="create"),
-    url(r'^$', views.post_list, name="list"),
+    url(r'^list/$', views.post_list, name="list"),
     url(r'^signup/$', views.usersignup, name="signup"),
     url(r'^login/$', views.userlogin, name="login"),
     url(r'^logout/$', views.userlogout, name="logout"),

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="{% url 'google:text' %}" method="GET">
+          <input type="text" class="form-control" placeholder="Search" name = "place" 
+          value="{{request.GET.place}}">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+
+	<h1>STATUS {{response.status}}</h1>
+		<table class="table">
+				<tr>
+					<td>
+							{{response.result.name}}
+					</td>
+					<td>
+							{{response.result.formatted_address}}
+					</td>
+					<td>
+							{{response.result.website}}
+					</td>
+				</tr>
+		</table>
+
+	<iframe
+		id='map'
+		width="600"
+		height="450"
+		frameborder="0" style="border:0"
+		src="" allowfullscreen>
+	</iframe>
+
+
+
+<script type="text/javascript">
+	var options = {
+	  enableHighAccuracy: true,
+	  timeout: 5000,
+	  maximumAge: 0
+	};
+
+	function success(pos) {
+	  var crd = pos.coords;
+
+	  var map = $('#map');
+	  map.attr('src', "https://www.google.com/maps/embed/v1/directions?key={{maps_key}}&origin="+crd.latitude+','+crd.longitude+"&destination={{response.result.geometry.location.lat}},{{response.result.geometry.location.lng}}")
+
+	  console.log('Your current position is:');
+	  console.log(`Latitude : ${crd.latitude}`);
+	  console.log(`Longitude: ${crd.longitude}`);
+	  console.log(`More or less ${crd.accuracy} meters.`);
+	};
+
+	function error(err) {
+	  console.warn(`ERROR(${err.code}): ${err.message}`);
+	  navigator.geolocation.getCurrentPosition(success, error, options);
+	};
+
+	navigator.geolocation.getCurrentPosition(success, error, options);
+</script>
+
+{% endblock content %}

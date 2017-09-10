@@ -12,7 +12,9 @@ from django.contrib.auth import authenticate, login, logout
  
 
 def usersignup(request):
-	context = {}
+	context = {
+		"page":"Signup"
+	}
 	form = UserSignUp()
 	context["form"] = form
 	if request.method == "POST":
@@ -33,7 +35,9 @@ def usersignup(request):
 
 def userlogin(request):
 	referer = request.META.get('HTTP_REFERER')
-	context = {}
+	context = {
+		"page":"Login"
+	}
 	form = UserLogin()
 	context["form"] = form
 	if request.method == "POST":
@@ -45,7 +49,8 @@ def userlogin(request):
 			auth_user = authenticate(username = username, password = password)
 			if auth_user is not None:
 				login(request, auth_user)
-				return redirect(referer)
+				# return redirect(referer)
+				return redirect("posts:list")
 			messages.warning(request, "Wrong login details, please try again")
 			return redirect("posts:login")
 		messages.warning(request, form.errors)
@@ -61,8 +66,8 @@ def post_home(request):
 	return HttpResponse("<h1>Hello</h1>")
 
 def post_create(request):
-	if not (request.user.is_staff or request.user.is_superuser):
-		raise Http404
+	if not (request.user.is_authenticated):
+		return render(request, 'notAllowed.html', {})
 	form = PostForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
 		obj = form.save(commit = False)
@@ -71,7 +76,7 @@ def post_create(request):
 		messages.success(request, "You did it!... eventually.")
 		return redirect("posts:list")
 	context = {
-	'title':'Create',
+	'page':'Create',
 	'user': request.user,
 	'form': form,
 	}
@@ -93,7 +98,7 @@ def post_detail(request, slug):
 	posts_like_count = instance.like_set.all().count()
 
 	context = {
-	"title": "Detail",
+	"page": "Detail",
 	"instance": instance,
 	"liked": liked,
 	"like_count": posts_like_count,
@@ -129,7 +134,7 @@ def post_list(request):
 
 	context = {
 	"objects": objects,
-	"title": "List",
+	"page": "List",
 	"user": request.user,
 	"today": today
 	}
@@ -146,7 +151,7 @@ def post_update(request, slug):
 		form.save()
 		return redirect("posts:list")
 	context = {
-	'title':'Update',
+	'page':'Update',
 	'user': request.user,
 	'form': form,
 	'post_object': post_object,

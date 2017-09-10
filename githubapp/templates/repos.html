@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>{{owner}}'s branches for the {{repo}} project:</h3>
+
+<table class='table'>
+	{% for repo in response %}
+		<tr>
+			<td><p>Name: {{repo.name}}</p>
+				<p>Language: {{repo.language}}</p>
+			</td>
+			<td><a href="{{repo.html_url}}" class="btn btn-primary">Go to Repo</a></td>
+
+		</tr>
+	{% endfor %}
+</table>
+{% endblock content %}
